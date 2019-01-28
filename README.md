@@ -1,6 +1,6 @@
 # Ethereum Wallet Ðapp
 
-The Ethereum wallet.
+The Teslafunds wallet.
 
 [![Build Status](https://travis-ci.org/ethereum/meteor-dapp-wallet.svg?branch=master)](https://travis-ci.org/ethereum/meteor-dapp-wallet)
 
@@ -10,9 +10,9 @@ can contain severe bugs!
 
 ## Development
 
-Start an `geth` node and and the app using meteor and open http://localhost:3000 in your browser:
+Start an `gtsf` node and and the app using meteor and open http://localhost:3000 in your browser:
 
-    $ geth --rpccorsdomain "http://localhost:3000" --rpc --unlock <your account>
+    $ gtsf --rpccorsdomain "http://localhost:3000" --rpc --unlock <your account>
 
 Starting the wallet dapp using [Meteor](https://meteor.com/install)
 
@@ -40,15 +40,6 @@ To make routing work properly you need to build it using:
 
 And start a local server which points with its document root into the `../build` folder,
 so that you can open the app using `http://localhost:80/`
-
-To deploy them to the **wallet.ethereum.org** site, execute these commands (from the app folder):
-
-    git checkout gh-pages
-    git merge develop
-    cd app
-    meteor-build-client ../build --path "/"
-          
-And push (or PR) your changes to the gh-pages branch.
 
 
 ***
