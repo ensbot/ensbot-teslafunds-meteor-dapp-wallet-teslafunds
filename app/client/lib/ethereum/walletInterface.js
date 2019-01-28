@@ -1,8 +1,8 @@
 Session.setDefault('network', false);
 
 // MAIN-NET CONTRACT ADDRESS
-var mainNetAddress = '0x273930d21e01ee25e4c219b63259d214872220a2';
-var testNetAddress = '0x1d649ca03d1bcd84877482c1dd8d3f9a7398728f';  // morden testnet
+var mainNetAddress = '0xbbce77fe164ee1fbb24c0bbd63f7c3b3283d93fb';
+var testNetAddress = '0xbbce77fe164ee1fbb24c0bbd63f7c3b3283d93fb';  // morden testnet
 
 walletInterface = [{"constant":false,"inputs":[{"name":"_owner","type":"address"}],"name":"removeOwner","outputs":[],"type":"function"},{"constant":false,"inputs":[{"name":"_addr","type":"address"}],"name":"isOwner","outputs":[{"name":"","type":"bool"}],"type":"function"},{"constant":true,"inputs":[],"name":"m_numOwners","outputs":[{"name":"","type":"uint256"}],"type":"function"},{"constant":true,"inputs":[],"name":"m_lastDay","outputs":[{"name":"","type":"uint256"}],"type":"function"},{"constant":true,"inputs":[],"name":"version","outputs":[{"name":"","type":"uint256"}],"type":"function"},{"constant":false,"inputs":[],"name":"resetSpentToday","outputs":[],"type":"function"},{"constant":true,"inputs":[],"name":"m_spentToday","outputs":[{"name":"","type":"uint256"}],"type":"function"},{"constant":false,"inputs":[{"name":"_owner","type":"address"}],"name":"addOwner","outputs":[],"type":"function"},{"constant":true,"inputs":[],"name":"m_required","outputs":[{"name":"","type":"uint256"}],"type":"function"},{"constant":false,"inputs":[{"name":"_h","type":"bytes32"}],"name":"confirm","outputs":[{"name":"","type":"bool"}],"type":"function"},{"constant":false,"inputs":[{"name":"_newLimit","type":"uint256"}],"name":"setDailyLimit","outputs":[],"type":"function"},{"constant":false,"inputs":[{"name":"_to","type":"address"},{"name":"_value","type":"uint256"},{"name":"_data","type":"bytes"}],"name":"execute","outputs":[{"name":"_r","type":"bytes32"}],"type":"function"},{"constant":false,"inputs":[{"name":"_operation","type":"bytes32"}],"name":"revoke","outputs":[],"type":"function"},{"constant":false,"inputs":[{"name":"_newRequired","type":"uint256"}],"name":"changeRequirement","outputs":[],"type":"function"},{"constant":true,"inputs":[{"name":"_operation","type":"bytes32"},{"name":"_owner","type":"address"}],"name":"hasConfirmed","outputs":[{"name":"","type":"bool"}],"type":"function"},{"constant":false,"inputs":[{"name":"_to","type":"address"}],"name":"kill","outputs":[],"type":"function"},{"constant":false,"inputs":[{"name":"_from","type":"address"},{"name":"_to","type":"address"}],"name":"changeOwner","outputs":[],"type":"function"},{"constant":true,"inputs":[],"name":"m_dailyLimit","outputs":[{"name":"","type":"uint256"}],"type":"function"},{"inputs":[{"name":"_owners","type":"address[]"},{"name":"_required","type":"uint256"},{"name":"_daylimit","type":"uint256"}],"type":"constructor"},{"anonymous":false,"inputs":[{"indexed":false,"name":"owner","type":"address"},{"indexed":false,"name":"operation","type":"bytes32"}],"name":"Confirmation","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"owner","type":"address"},{"indexed":false,"name":"operation","type":"bytes32"}],"name":"Revoke","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"oldOwner","type":"address"},{"indexed":false,"name":"newOwner","type":"address"}],"name":"OwnerChanged","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"newOwner","type":"address"}],"name":"OwnerAdded","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"oldOwner","type":"address"}],"name":"OwnerRemoved","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"newRequirement","type":"uint256"}],"name":"RequirementChanged","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"from","type":"address"},{"indexed":false,"name":"value","type":"uint256"}],"name":"Deposit","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"owner","type":"address"},{"indexed":false,"name":"value","type":"uint256"},{"indexed":false,"name":"to","type":"address"},{"indexed":false,"name":"data","type":"bytes"}],"name":"SingleTransact","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"owner","type":"address"},{"indexed":false,"name":"operation","type":"bytes32"},{"indexed":false,"name":"value","type":"uint256"},{"indexed":false,"name":"to","type":"address"},{"indexed":false,"name":"data","type":"bytes"}],"name":"MultiTransact","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"operation","type":"bytes32"},{"indexed":false,"name":"initiator","type":"address"},{"indexed":false,"name":"value","type":"uint256"},{"indexed":false,"name":"to","type":"address"},{"indexed":false,"name":"data","type":"bytes"}],"name":"ConfirmationNeeded","type":"event"}];
 WalletContract = web3.eth.contract(walletInterface);
@@ -21,7 +21,7 @@ contractVersions = [
         address: '0x4efc6389b88569a375668b7b3bd4a9b6c8f4a942'
     },
     // 1 better daily limit
-    { 
+    {
         original: '8207780d6fb31803373aff97360562231187ebb0da6b4678eeb68ceb16897509',
         stub: '',
         address: '0x273930d21e01ee25e4c219b63259d214872220a2'
@@ -133,11 +133,11 @@ var checkCodeOnAddress = function(address, callback) {
                 if(address === testNetAddress) {
                     console.log('Use Test-net wallet as code base for stubs on address: ', address);
                 }
-            
+
             // use testnet or private net address, or re-deploy
             } else {
 
-                callback();                
+                callback();
             }
         } else {
             GlobalNotification.error({
@@ -163,7 +163,7 @@ checkForOriginalWallet = function() {
     });
 
     // Only check for the wallet if user has enough funds to deploy it
-    if (enoughBalance) {     
+    if (enoughBalance) {
         // see if the original wallet is deployed, if not re-deploy on testnet
         checkCodeOnAddress(mainNetAddress, function() {
             checkCodeOnAddress(testNetAddress, function() {
@@ -189,7 +189,7 @@ checkForOriginalWallet = function() {
                     deployTestnetWallet();
             });
         });
-    } 
+    }
 }
 
 
@@ -213,7 +213,7 @@ checkWalletOwners = function(address) {
             myContract.m_numOwners(function(e, numberOfOwners){
                 if(!e) {
                     numberOfOwners = numberOfOwners.toNumber();
-                    
+
                     if(numberOfOwners > 0) {
                         var owners = [];
 
@@ -223,10 +223,10 @@ checkWalletOwners = function(address) {
                                 web3.eth.getStorageAt(address, 2+i, function(e, ownerAddress){
                                     if(!e) {
                                         ownerAddress = ownerAddress.replace('0x000000000000000000000000','0x');
-                                        
+
                                         if(owners.length > numberOfOwners)
                                             return resolve();
-                                        
+
                                         if(web3.isAddress(ownerAddress) && ownerAddress !== '0x0000000000000000000000000000000000000000') {
                                             myContract.isOwner.call(ownerAddress, {from: ownerAddress}, function(e, isOwner){
                                                 if(!e && isOwner) {
