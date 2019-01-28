@@ -1,0 +1,20 @@
+<template name="elements_balance">
+    <span class="account-balance">
+        {{convertedBalance}}
+
+        {{! getBalance is necessary to make the count up/down animation work}}
+        {{getBalance}}
+
+        {{#if changeUnit}}
+            {{> elements_selectableUnit}}
+        {{else}}
+            <span>
+                {{#if $neq unit 'ether'}}
+                    {{unit}}
+                {{else}}
+                    tsf
+                {{/if}}
+            </span>
+        {{/if}}
+    </span>
+</template>
